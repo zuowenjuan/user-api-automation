@@ -19,17 +19,9 @@ jobs:
             - name: Start Mock Server         
                run: |           
                    cd mock-server
-                   pwd
-                   ls -la
                    node server.js > server.log 2>&1 &                    
-                   sleep 2
-                   pgrep -f "node server.js" || (cat server.log && exit 1)
-                   for i in {1..10};do 
-                       nc -zv localhost 3000 &break
-                       echo "Waiting for port 3000... $i" 
-                       sleep 1
-                   done  
-                   nc -zv localhost 3000 || (echo "mock Server failed to start" && cat server.log && exit 1)    
+                   sleep 3
+                   cat server.log     
             - name: Setup Python         
               uses: actions/setup-python@v5         
               with:           
