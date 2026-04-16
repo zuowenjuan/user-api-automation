@@ -14,8 +14,8 @@ jobs:
                   node-version: '18'              
             - name: Install Mock Server Dependencies         
               run: |           
-              cd mock-server           
-              npm install            
+                  cd mock-server           
+                  npm install            
             - name: Start Mock Server         
               run: |           
                   cd mock-server           
