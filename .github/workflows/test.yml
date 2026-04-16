@@ -1,34 +1,31 @@
-name: API Automation Test  
-
-on:
-    push:     
-        branches: [ main ]  
-jobs:   
-    test:       
-        runs-on: ubuntu-latest      
-        steps:       
-            - uses: actions/checkout@v4        
-            - name: Setup Node.js         
-              uses: actions/setup-node@v4         
-              with:           
-                  node-version: '18'              
-            - name: Install Mock Server Dependencies         
-              run: |           
-                  cd mock-server           
-                  npm install            
-            - name: Start Mock Server         
-               run: |           
-                   cd mock-server
-                   node server.js > server.log 2>&1 &                    
-                   sleep 3
-                   cat server.log     
-            - name: Setup Python         
-              uses: actions/setup-python@v5         
-              with:           
-                  python-version: '3.11'              
-            - name: Install Python Dependencies         
-              run: |           
-                  pip install requests pytest             
-            - name: Run Tests         
-              run: |           
-                  pytest test_user_api.py -v
+name: API Automation Test<br/><br/>
+on:<br/>  
+  push:<br/>    
+    branches: [ main ]<br/><br/>
+jobs:<br/>  
+  test:<br/>    
+    runs-on: ubuntu-latest<br/>    
+    steps:<br/>      
+      - uses: actions/checkout@v4<br/><br/>      
+      - name: Setup Node.js<br/>        
+        uses: actions/setup-node@v4<br/>        
+        with:<br/>          
+          node-version: '18'<br/><br/>      
+      - name: Install Mock Server Dependencies<br/>        
+        run: |<br/>          
+          cd mock-server<br/>          
+          npm install<br/><br/>      
+      - name: Start Mock Server<br/>        
+        run: |<br/>          
+          cd mock-server<br/>          
+          node server.js > server.log 2>&1 &<br/>          
+          sleep 3<br/>          
+          cat server.log<br/><br/>      
+      - name: Setup Python<br/>        
+        uses: actions/setup-python@v5<br/>        
+        with:<br/>          
+          python-version: '3.11'<br/><br/>      
+      - name: Install Python Dependencies<br/>        
+        run: pip install requests pytest<br/><br/>      
+      - name: Run Tests<br/>        
+        run: pytest test_user_api.py -v
