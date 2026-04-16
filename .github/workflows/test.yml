@@ -15,12 +15,19 @@ jobs:
         run: |           
           cd mock-server           
           npm install        
-      - name: Start Mock Server         
+      - name: Start Mock Server(debug)         
         run: |           
-          cd mock-server           
-          node server.js > server.log 2>&1 &           
-          sleep 3           
-          cat server.log        
+          cd mock-server
+          echo "Current directory:"           
+          pwd           
+          echo "Files in mock-server:"           
+          ls -la           
+          echo "Node version:"           
+          node --version           
+          echo "Installing dependencies..."           
+          npm install           
+          echo "Dependencies installed. Starting server in foreground for 5 seconds..."           
+          timeout 5 node server.js || echo "Server exited with code $?"                  
       - name: Setup Python         
         uses: actions/setup-python@v5         
         with:           
