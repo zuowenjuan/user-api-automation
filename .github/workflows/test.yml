@@ -1,38 +1,20 @@
-name: API Automation Test  
-on:   
-  push:     
-    branches: [ main ]  
-jobs:   
-  test:     
-    runs-on: ubuntu-latest     
-    steps:       
-      - uses: actions/checkout@v4        
-      - name: Setup Node.js         
-        uses: actions/setup-node@v4         
-        with:           
-          node-version: '18'        
-      - name: Install Mock Server Dependencies         
-        run: |           
-          cd mock-server           
-          npm install        
-      - name: Start Mock Server(debug)         
-        run: |           
-          cd mock-server
-          echo "Current directory:"           
-          pwd           
-          echo "Files in mock-server:"           
-          ls -la           
-          echo "Node version:"           
-          node --version           
-          echo "Installing dependencies..."           
-          npm install           
-          echo "Dependencies installed. Starting server in foreground for 5 seconds..."           
-          timeout 5 node server.js || echo "Server exited with code $?"                  
-      - name: Setup Python         
-        uses: actions/setup-python@v5         
-        with:           
-          python-version: '3.11'        
-      - name: Install Python Dependencies         
-        run: pip install requests pytest        
-      - name: Run Tests         
-        run: pytest test_user_api.py -v
+name:CI
+on:
+  push:
+    branches:[ main ]
+jobs:
+  test:
+    runs-on:ubuntu-latest
+    steps:
+      - uses:actions/checkout@v4
+      - uses:actions/setup-node@v4
+        with:
+          node-version:'18'
+      - run:cd mock-server && npm install
+      - run:cd mock-server && node server.js &
+      - run:sleep 5
+      - uses:actions/setup-python@v5
+        with:
+          python-version:'3.11'
+      - run:pip install requests pytest pytest-html
+      - run:pytest test_user_api.py -v
